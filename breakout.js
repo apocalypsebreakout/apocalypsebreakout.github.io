@@ -554,14 +554,19 @@ function playGame() {
                 if (Math.abs(ball.dx) < BALL_ACC) {
                     ball.dx = Math.sign(ball.dx) * BALL_ACC
                 }
+
             }
             collision = true;
+            ball.dx += (Math.random() - 0.5);
+            ball.dy += (Math.random() - 0.5);
         }
 
         //top
         if (ball.y < BORDERWIDTH) {
             ball.dy = -ball.dy;
             collision = true;
+            ball.dx += (Math.random() - 0.5);
+            ball.dy += (Math.random() - 0.5);
         }
 
         //bottom
@@ -569,11 +574,15 @@ function playGame() {
             if (ball.y > canvas.height - ball.w - BORDERWIDTH && (ball.x < gate.x + ball.w || ball.x > gate.x + gate.w)) {
                 ball.dy = -ball.dy;
                 collision = true;
+                ball.dx += (Math.random() - 0.5);
+                ball.dy += (Math.random() - 0.5);
             }
         } else {
             if (ball.y > canvas.height - ball.w - BORDERWIDTH) {
                 ball.dy = -ball.dy;
                 collision = true;
+                ball.dx += (Math.random() - 0.5);
+                ball.dy += (Math.random() - 0.5);                
             }
         }
 
