@@ -29,8 +29,27 @@ body {
     text-align: center;
 }
 
+#restart_button {
+	position: absolute;
+    width: 800px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 770px;
+
+    font-family: 'Brea';
+    color: white;
+    font-size: 36px;
+    text-align: center;
+
+    display: none;
+}
+
+#restart_button:hover {
+	cursor: pointer;
+}
+
 canvas {
-    background: black;
+    background: "#111110";
     border: solid 3px #222;
 }
 
@@ -43,7 +62,8 @@ canvas {
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    /*	background-color: black; */
+    
+    background-color: "#111110"; 
 }
 
 #container {

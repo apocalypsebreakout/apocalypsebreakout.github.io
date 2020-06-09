@@ -1,4 +1,4 @@
-let all_the_prophecies = [
+const the_ends_of_the_world = [
   ["66–70","Simon bar Giora, Jewish Essenes","The Jewish Essene sect of ascetics saw the Jewish uprising against the Romans in 66–70 in Judea as the final end-time battle which would bring about the arrival of the Messiah. By the authority of Simon, coins were minted declaring the redemption of Israel.","[14]\n[15]"  ],
   ["365","Hilary of Poitiers","This early French bishop announced the end of the world would happen during this year.","[16]"  ],
   ["375–400","Martin of Tours","This French bishop stated that the world would end before 400 AD, writing, \"There is no doubt that the Antichrist has already been born. Firmly established already in his early years, he will, after reaching maturity, achieve supreme power.\"","[17]\n[18]"  ],

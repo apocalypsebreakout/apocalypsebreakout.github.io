@@ -7,7 +7,7 @@ const PADDLE_ACC = 1.5;
 const PADDLE_MAX_VEL = 9;
 const PADDLE_Y = 370;
 
-const BALL_WIDTH = 6;
+const BALL_WIDTH = 7;
 const BALL_ACC = 2;
 
 const BORDERWIDTH = 15;
@@ -31,8 +31,6 @@ const BOOK_HEIGHT = 50;
 const PROPHECYWIDTH = 15;
 const PROPHECYHEIGHT = 15;
 
-
-
 const brickWallImage = new Image();
 
 const worlds = ['placeholder.jpg'];
@@ -46,6 +44,8 @@ ballImage.src = 'sprites/eye.png'
 
 const paddleImage = new Image();
 paddleImage.src = 'sprites/paddle.png'
+
+let score = 0;
 
 
 
@@ -66,11 +66,13 @@ function playGame() {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
+    let restart = document.querySelector('#restart_button');
+    restart.style.display = 'none';
+
     // SCORE
 
     let scoreBox = document.querySelector('#score_box');
     scoreBox.style.display = 'block';
-    let score = 0;
 
     function updateScore() {
         score += 100;
@@ -247,15 +249,15 @@ function playGame() {
             // ctx.fillRect(this.x, this.y, this.w, this.w);
             if (this.dx > 0) {
                 if (this.dy > 0) {
-                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 4, this.y - 4, ballImage.width / 2, ballImage.width / 2)
                 } else {
-                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 4, this.y - 4, ballImage.width / 2, ballImage.width / 2)
                 }
             } else {
                 if (this.dy > 0) {
-                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 4, this.y - 4, ballImage.width / 2, ballImage.width / 2)
                 } else {
-                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 4, this.y - 4, ballImage.width / 2, ballImage.width / 2)
                 }
             }
         }
@@ -296,7 +298,7 @@ function playGame() {
 
         draw() {
             ctx.drawImage(this.img, this.sx, this.sy, this.sWidth, this.sHeight, this.x, this.y, this.w, this.h);
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = 'black';
             ctx.strokeRect(this.x, this.y, this.w, this.h);
         }
     }
@@ -479,6 +481,8 @@ function playGame() {
     let who_span = document.querySelector('#who');
     let what_span = document.querySelector('#what');
 
+    let all_the_prophecies = the_ends_of_the_world
+
 
     const prophecyOnScreen = {
         status: false,
@@ -539,7 +543,7 @@ function playGame() {
 
             //for paddle
             if (rect.isPaddle) {
-                ball.dx = valBetweenAltMin(ball.dx + paddle.dx, -PADDLE_ACC, PADDLE_ACC);
+                ball.dx = valBetweenAltMin(ball.dx + paddle.dx, -PADDLE_MAX_VEL * 0.7, PADDLE_MAX_VEL * 0.7);
                 if (ball.dx == 0) {
                     ball.dx = 0.1;
                 }
@@ -689,6 +693,7 @@ function playGame() {
 
         endGame() {
             this.status = true;
+            restart.style.display = 'block';
         },
 
         draw() {
@@ -762,6 +767,14 @@ function playGame() {
 
     window.requestAnimationFrame(drawGame);
 }
+
+
+function restart() {
+    score: 0;
+    playGame();
+}
+
+
 
 
 
