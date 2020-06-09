@@ -7,7 +7,7 @@ const PADDLE_ACC = 1;
 const PADDLE_MAX_VEL = 7;
 const PADDLE_Y = 320;
 
-const BALL_WIDTH = 5;
+const BALL_WIDTH = 4;
 const BALL_ACC = 2;
 
 const BORDERWIDTH = 15;
@@ -37,6 +37,11 @@ const TEXTBOX_HEIGHT = 150;
 
 const brickWallImage = new Image();
 brickWallImage.src = 'placeholder.jpg';
+
+const ballImage = new Image();
+ballImage.src = 'sprites/eye.png'
+
+
 
 brickWallImage.onload = function() {
     startGame();
@@ -217,9 +222,21 @@ function playGame() {
         }
 
         draw() {
-            ctx.fillStyle = 'green';
-            ctx.fillRect(this.x, this.y, this.w, this.w);
-
+            // ctx.fillStyle = 'green';
+            // ctx.fillRect(this.x, this.y, this.w, this.w);
+            if (this.dx > 0) {
+                if (this.dy > 0) {
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                } else {
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 0, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                }
+            } else {
+                if (this.dy > 0) {
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 0, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                } else {
+                    ctx.drawImage(ballImage, (ballImage.width / 2) * 1, (ballImage.height / 2) * 1, ballImage.width / 2, ballImage.height / 2, this.x - 3, this.y - 3, 10, 10)
+                }
+            }
         }
     }
 
@@ -263,6 +280,8 @@ function playGame() {
         }
     }
 
+    /////////CHECCAZZO FAI LA MATRICE E' INUTILE
+
     function updateBricks() {
         for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
             for (let r = 0; r < BRICKROWCOUNT; r++) {
@@ -293,7 +312,7 @@ function playGame() {
     function buildWall(img) {
         for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
             brickWall[c] = [];
-            for (let r = 0; r < BRICKROWCOUNT; r++) {
+            for (let r = 0; r < BRICKROWCOUNT; r++) { ///riscrivi senza doppio loop: brickWall.push(new Brick(c, r, img))
                 brickWall[c][r] = new Brick(c, r, img)
             }
         }
@@ -309,7 +328,7 @@ function playGame() {
         w: BOOK_WIDTH,
         h: BOOK_HEIGHT,
 
-        prophecies: [], 
+        prophecies: [],
         amountOfPropheciesRead: 0,
 
         spitProphecy() {
@@ -322,9 +341,9 @@ function playGame() {
         },
 
         update() {
-           // if (!prophecyOnScreen.status) {
-                this.spitProphecy(); // add animation, etc.
-          //  }
+            // if (!prophecyOnScreen.status) {
+            this.spitProphecy(); // add animation, etc.
+            //  }
         },
 
         draw() {
@@ -601,6 +620,7 @@ function playGame() {
     // let oldTimeStamps;
     // let fps;
     let frames = 0;
+    let gameover = false;
 
     function drawGame(timeStamp) {
         frames += 1;
@@ -634,7 +654,7 @@ function playGame() {
         prophecyCollision();
 
 
-        if (frames % 2 == 0) {
+       // if (frames % 2 == 0) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             gate.draw();
             borders.draw();
@@ -650,7 +670,7 @@ function playGame() {
             paddle.draw();
 
             //prophecyOnScreen.draw();
-        }
+       // }
 
         window.requestAnimationFrame(drawGame);
     }
