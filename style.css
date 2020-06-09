@@ -1,0 +1,52 @@
+/*this is a bit messy */
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+canvas {
+	background: black;
+	border: solid 3px #222;
+}
+
+#gameCanvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+/*	image-rendering: -moz-crisp-edges;
+  	image-rendering: -webkit-crisp-edges;
+  	image-rendering: pixelated;
+  	image-rendering: crisp-edges;*/
+/*	background-color: black; */
+}
+
+body {
+	background-color: black;
+
+}
+
+#container {
+	position: absolute;
+    top: 5vh;
+    width: 90vh;
+    height: 90vh;
+    left: 50%;
+    transform: translateX(-50%);
+ }
+
+ #prophecy_box {
+ 	position: absolute;
+ 	top: 65%;
+ 	left: 5%;
+ 	height: 30%;
+ 	width: 90%;
+ 	border: 2px solid pink;
+
+ 	display: none;
+
+ 	color: white;
+ 	font-family: 'courier new';
+ 	background-color: rgba(0,0,0,.7)
+ }
