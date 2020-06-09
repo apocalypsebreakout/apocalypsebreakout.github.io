@@ -1,8 +1,5 @@
 "use strict";
 
-
-
-
 // CONSTANTS
 const PADDLE_HEIGHT = 8;
 const PADDLE_WIDTH = 50;
@@ -45,20 +42,6 @@ brickWallImage.onload = function() {
     startGame();
 }
 
-// let textProphecies = [];
-// fetch('prophecies.json').then( // this should be somewhere else, when I'm
-//     function(u) { return u.json(); } // gonna load all the elements and images using 
-// ).then( // some promises
-//     function(json) {
-//         textProphecies = json; // for now the json it's still a placeholder with a bunch of lorem ipsums
-//         console.log('prophecies loaded');
-//         console.log(textProphecies.length)
-//     }
-// )
-
-
-
-
 function startGame() {
 
     //menuGame();
@@ -70,8 +53,6 @@ function playGame() {
 
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
-
-
 
     // BORDERS
     const borders = {
@@ -282,14 +263,12 @@ function playGame() {
         }
     }
 
-    //da rifare
     function updateBricks() {
         for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
             for (let r = 0; r < BRICKROWCOUNT; r++) {
                 let b = brickWall[c][r];
                 if (b.status != false) {
                     b.update();
-                    //        b.draw();
                 }
             }
         }
@@ -300,7 +279,6 @@ function playGame() {
             for (let r = 0; r < BRICKROWCOUNT; r++) {
                 let b = brickWall[c][r];
                 if (b.status != false) {
-                    //        b.update();
                     b.draw();
                 }
             }
@@ -331,7 +309,7 @@ function playGame() {
         w: BOOK_WIDTH,
         h: BOOK_HEIGHT,
 
-        prophecies: [], // should this be in the upper scope?
+        prophecies: [], 
         amountOfPropheciesRead: 0,
 
         spitProphecy() {
@@ -674,40 +652,15 @@ function playGame() {
             //prophecyOnScreen.draw();
         }
 
-        //     ctx.fillStyle = 'white';
-        // 	ctx.fillRect(0, 0, 200, 100);
-        // ctx.font = '25px Arial';
-        // 	ctx.fillStyle = 'black';
-        // 	ctx.fillText("FPS: " + fps, 10, 30);
-
         window.requestAnimationFrame(drawGame);
     }
-
-
-    // first ball
-    // balls.push(new Ball(250, 400));
-    // balls.push(new Ball(220, 300));
-    // balls.push(new Ball(235, 350));
-    // balls.push(new Ball(240, 360));
-    // balls.push(new Ball(250, 380));
-    // balls.push(new Ball(260, 390));
-    // balls.push(new Ball(270, 395));
-    // balls.push(new Ball(285, 350));
-
-
 
     window.requestAnimationFrame(drawGame);
 }
 
 
 
-
-
-
-
-
-
-// misc
+// misc utilities
 
 function valBetweenAltMin(val, min, max) {
     return (val > min) ? ((val < max) ? val : max) : min;
