@@ -322,9 +322,9 @@ function playGame() {
         },
 
         update() {
-            if (!prophecyOnScreen.status) {
+           // if (!prophecyOnScreen.status) {
                 this.spitProphecy(); // add animation, etc.
-            }
+          //  }
         },
 
         draw() {
