@@ -5,6 +5,11 @@ let startGamereq;
 let prophecyBox;
 let restartButton;
 let scoreBox;
+let bestBox;
+let gameOverBox;
+
+let score = 0;
+let best = 0;
 
 // CONSTANTS
 const PADDLE_HEIGHT = 10;
@@ -62,7 +67,6 @@ bookImage.src = 'sprites/book.png'
 const prophecyImage = new Image();
 prophecyImage.src = 'sprites/prophecy.png'
 
-let score = 0;
 
 
 frameImage.onload = function() {
@@ -101,10 +105,11 @@ function playGame() {
 
     restartButton = document.getElementById('restart_button');
     scoreBox = document.getElementById('score_box');
-
+    bestBox = document.getElementById('best_box');
     // SCORE
 
     scoreBox.style.display = 'block';
+    bestBox.style.display = 'block';
 
     function updateScore() {
         score += 100;
@@ -739,22 +744,20 @@ function playGame() {
 
     ///GAME OVER 
 
+    gameOverBox = document.getElementById('gameOver_box')
     const gameOver = {
         status: false,
 
         endGame() {
             if (this.status == false) {
                 this.status = true;
+                gate.status = 'closed';
+                book.prophecies = [];
+                gameOverBox.style.display = 'block'
                 restartButton.style.display = 'block';
+                document.addEventListener('keypress', enterRestart);
             }
         },
-
-        draw() {
-            if (this.status == true) {
-                ctx.fillStyle = 'white';
-                ctx.fillText('GAME OVER', 300, 300);
-            }
-        }
     }
     // let secondsPassed;
     // let oldTimeStamps;
@@ -804,7 +807,6 @@ function playGame() {
         ctx.fillStyle = 'rgba(50, 50, 45, .9)';
         ctx.fillRect(20, 20, 818, 618);
         borders.draw();
-        gameOver.draw();
         gate.draw();
         book.draw();
         drawBricks();
@@ -826,14 +828,22 @@ function playGame() {
 }
 
 
-
+function enterRestart(e) {
+    if (e.key == 'Enter') {
+        restart();
+    }
+}
 
 
 function restart() {
+    document.removeEventListener('keypress', enterRestart);
+    best = Math.max(score, best);
     score = 0;
     restartButton.style.display = 'none';
     prophecyBox.style.display = 'none';
+    gameOverBox.style.display = 'none'
     scoreBox.innerHTML = 'score: ' + score;
+    bestBox.innerHTML = 'best: ' + best;
     window.cancelAnimationFrame(playGameReq);
     playGame();
 }

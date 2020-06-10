@@ -52,28 +52,59 @@ body {
     border: 2px solid gray;
 
     display: none;
+
+    animation: blinkingText .3s infinite;
 }
 
 #restart_button:hover {
     cursor: pointer;
 }
 
+@keyframes blinkingText {
+    0% {
+        color: #000;
+        background-color: rgba(200, 200, 195, .8)
+    }
+
+    49% {
+        color: #000;
+        background-color: rgba(200, 200, 195, .8)
+    }
+
+    60% {
+        color: #fff;
+        background-color: rgba(50, 50, 45, .9);
+    }
+
+    99% {
+        color: #fff;
+        background-color: rgba(50, 50, 45, .9);
+    }
+
+    100% {
+        color: #000;
+        background-color: rgba(200, 200, 195, .8)
+    }
+}
+
 canvas {
-/*    background: rgba(50, 50, 45, .9);
-*//*    border: solid 3px #222;
-*/}
+    /*    background: rgba(50, 50, 45, .9);
+*/
+    /*    border: solid 3px #222;
+*/
+}
 
 #gameCanvas {
     position: absolute;
     width: 858px;
     height: 658px;
 
-/*    image-rendering: -moz-crisp-edges;
+    /*    image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 */
-/*    background-color: "#111110";
+    /*    background-color: "#111110";
 */
 }
 
@@ -100,25 +131,51 @@ canvas {
 
 
 #start_game {
+    position: absolute;
+    left: 18%;
+    width: 64%;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px;
+
+    display: none;
+
+    color: white;
+    font-family: 'courier new';
+}
+
+#gameOver_box {
 	position: absolute;
-	left: 18%;
-	width: 64%;
+
+	text-align: center;
+	width: 100%;
+	left:50%;
 	top:50%;
-	transform: translateY(-50%);
-	padding: 10px;
+	transform: translate(-50%,-50%);
 
 	display: none;
 
-	color: white;
-	font-family: 'courier new';
+    color: white;
+    font-family: 'courier new';
 }
-
-
 
 #score_box {
     position: absolute;
     top: 49px;
     left: 58px;
+
+    color: white;
+    font-family: Brea;
+    font-size: 30px;
+    letter-spacing: 3px;
+
+    display: none;
+}
+
+#best_box {
+    position: absolute;
+    top: 49px;
+    right: 58px;
 
     color: white;
     font-family: Brea;
@@ -144,7 +201,8 @@ canvas {
     color: white;
     font-family: 'courier new';
 
-    background: rgb(5,5,5);
-	background: linear-gradient(0deg, rgba(5,5,5,.95) 0%, rgba(98,97,93,.85) 100%);
-/*    background-color: rgba(0, 0, 0, .7)
-*/}
+    background: rgb(5, 5, 5);
+    background: linear-gradient(0deg, rgba(5, 5, 5, .95) 0%, rgba(98, 97, 93, .85) 100%);
+    /*    background-color: rgba(0, 0, 0, .7)
+*/
+}
