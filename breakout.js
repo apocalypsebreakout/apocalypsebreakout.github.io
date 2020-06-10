@@ -67,6 +67,7 @@ bookImage.src = 'sprites/book.png'
 const prophecyImage = new Image();
 prophecyImage.src = 'sprites/prophecy.png'
 
+let all_the_prophecies = the_ends_of_the_world
 
 
 frameImage.onload = function() {
@@ -87,6 +88,7 @@ function startGame() {
         document.removeEventListener('keypress', exitMenu);
         console.log('uuuh');
         startBox.style.display = 'none';
+        document.getElementById('title').style.display = 'none';
         playGame();
     }
 
@@ -498,7 +500,6 @@ function playGame() {
     let who_span = document.getElementById('who');
     let what_span = document.getElementById('what');
 
-    let all_the_prophecies = the_ends_of_the_world
 
 
     const prophecyOnScreen = {
@@ -636,6 +637,13 @@ function playGame() {
         //top
         if (ball.y < BORDERWIDTH) {
             ball.dy = -ball.dy;
+            if (Math.abs(ball.dy) > Math.abs(BALL_ACC)) {
+                ball.dy *= 0.9;
+                if (Math.abs(ball.dx) < BALL_ACC) {
+                    ball.dy = Math.sign(ball.dx) * BALL_ACC
+                }
+
+            }
             collision = true;
             ball.dx += (Math.random() - 0.5);
             ball.dy += (Math.random() - 0.5);

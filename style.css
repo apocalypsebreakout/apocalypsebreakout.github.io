@@ -22,18 +22,15 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 1vh;
+    top: 19%;
+    width: 100%;
 
     font-family: 'Brea';
     color: white;
-    font-size: 48px;
+    font-size: 60px;
     text-align: center;
     letter-spacing: 1px;
 
-    padding: 2px 20px 5px 20px;
-
-    background-color: rgba(50, 50, 45, .9);
-    border: 2px solid gray;
 }
 
 #restart_button {
@@ -113,7 +110,7 @@ body {
     position: absolute;
     left: 18%;
     width: 64%;
-    top: 50%;
+    top: 54%;
     transform: translateY(-50%);
     padding: 10px;
 
