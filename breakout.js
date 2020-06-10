@@ -28,7 +28,7 @@ const GATEWIDTH = 200;
 const CANVASWIDTH = 858;
 const CANVASHEIGHT = 658;
 
-const BRICKROWCOUNT = 10; // move all those variables on top
+const BRICKROWCOUNT = 10;
 const BRICKCOLUMNCOUNT = 8;
 const BRICKWIDTH = 50;
 const BRICKHEIGHT = 20;
@@ -151,7 +151,7 @@ function playGame() {
                 this.i += 1;
             } else if (this.status == 'open') {
                 this.spitWait += 1;
-                this.i +=1;
+                this.i += 1;
             }
 
             if (this.f == 100) {
@@ -171,8 +171,6 @@ function playGame() {
                     this.status = 'closing';
                 }
             }
-
-            //console.log('status:', this.status, 'f:', this.f, 'spitWait:', this.spitWait, 'ballToSpit:', this.ballToSpit)
         },
 
 
@@ -197,9 +195,9 @@ function playGame() {
             // ctx.fillRect(this.x, canvas.height - BORDERWIDTH, this.w, BORDERWIDTH);
             if (this.status == 'open' || this.status == 'closing') {
                 if (this.i % 50 < 25) {
-                    ctx.drawImage(gateImage, 0, 0, 250, 150, this.x -25, CANVASHEIGHT - 150, 250, 150)
+                    ctx.drawImage(gateImage, 0, 0, 250, 150, this.x - 25, CANVASHEIGHT - 150, 250, 150)
                 } else {
-                    ctx.drawImage(gateImage, 250, 0, 250, 150, this.x -25, CANVASHEIGHT - 150, 250, 150)
+                    ctx.drawImage(gateImage, 250, 0, 250, 150, this.x - 25, CANVASHEIGHT - 150, 250, 150)
                 }
             }
         }
@@ -353,31 +351,6 @@ function playGame() {
         }
     }
 
-    /////////CHECCAZZO FAI LA MATRICE E' INUTILE
-
-    // function updateBricks() {
-    //     for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
-    //         for (let r = 0; r < BRICKROWCOUNT; r++) {
-    //             let b = brickWall[c][r];
-    //             if (b.status != false) {
-    //                 b.update();
-    //             }
-    //         }
-    //     }
-    // }
-
-    // function drawBricks() {
-    //     for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
-    //         for (let r = 0; r < BRICKROWCOUNT; r++) {
-    //             let b = brickWall[c][r];
-    //             if (b.status != false) {
-    //                 b.draw();
-    //             }
-    //         }
-    //     }
-    // } 
-
-
     function updateBricks() {
         for (let i = brickWall.length - 1; i >= 0; i--) {
             let brick = brickWall[i];
@@ -397,16 +370,6 @@ function playGame() {
     let brickWall = [];
 
     buildWall(brickWallImage);
-
-    // function buildWall(img) {
-    //     for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
-    //         brickWall[c] = [];
-    //         for (let r = 0; r < BRICKROWCOUNT; r++) { ///riscrivi senza doppio loop: brickWall.push(new Brick(c, r, img))
-    //             brickWall[c][r] = new Brick(c, r, img)
-    //         }
-    //     }
-    // }
-
 
     function buildWall(img) {
         for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
@@ -509,8 +472,6 @@ function playGame() {
                 book.amountOfPropheciesRead += 1;
                 book.prophecies.splice(i, 1);
 
-
-                //score += 100;
                 continue;
             }
             if (prophecy.y > canvas.height + 5) {
@@ -718,16 +679,7 @@ function playGame() {
 
     //big function
     function checkCollision(ball) {
-        //check quadrante sopra, con i brick
-        // for (let c = 0; c < BRICKCOLUMNCOUNT; c++) {
-        //     for (let r = 0; r < BRICKROWCOUNT; r++) {
-        //         let brick = brickWall[c][r];
-        //         if (brick.status == 'active') {
-        //             ballRectCollision(ball, brick)
-        //         }
-        //     }
-        // }
-
+        //check brick
         for (let i = 0; i < brickWall.length; i++) {
             let brick = brickWall[i];
             ballRectCollision(ball, brick)
@@ -759,21 +711,13 @@ function playGame() {
             }
         },
     }
-    // let secondsPassed;
-    // let oldTimeStamps;
-    // let fps;
+
     let frames = 0;
     let frame = new Image();
     frame.src = 'frame.png'
 
     function drawGame() {
         frames += 1;
-
-
-        // secondsPassed = (timeStamp - oldTimeStamps) / 1000;
-        // oldTimeStamps = timeStamp;
-
-        // fps = Math.round(1 / secondsPassed);
 
         if (brickWall.length == 0) {
             gameOver.endGame();
@@ -802,7 +746,6 @@ function playGame() {
         prophecyCollision();
 
 
-        // if (frames % 2 == 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = 'rgba(50, 50, 45, .9)';
         ctx.fillRect(20, 20, 818, 618);
@@ -819,8 +762,6 @@ function playGame() {
 
         paddle.draw();
 
-        //prophecyOnScreen.draw();
-        // }
         playGameReq = window.requestAnimationFrame(drawGame);
     }
 
@@ -857,4 +798,3 @@ function restart() {
 function valBetweenAltMin(val, min, max) {
     return (val > min) ? ((val < max) ? val : max) : min;
 }
-
