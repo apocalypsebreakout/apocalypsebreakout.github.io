@@ -1,5 +1,11 @@
 "use strict";
 
+let playGameReq;
+let startGamereq;
+let prophecyBox;
+let restartButton;
+let scoreBox;
+
 // CONSTANTS
 const PADDLE_HEIGHT = 10;
 const PADDLE_WIDTH = 75;
@@ -10,11 +16,12 @@ const PADDLE_Y = 370;
 const BALL_WIDTH = 7;
 const BALL_ACC = 2;
 
-const BORDERWIDTH = 15;
+const BORDERWIDTH = 44;
 const GATEWIDTH = 200;
 
 
-const CANVASWIDTH = 800;
+const CANVASWIDTH = 858;
+const CANVASHEIGHT = 658;
 
 const BRICKROWCOUNT = 10; // move all those variables on top
 const BRICKCOLUMNCOUNT = 8;
@@ -23,10 +30,10 @@ const BRICKHEIGHT = 20;
 const BRICKOFFSETX = (CANVASWIDTH - (BRICKCOLUMNCOUNT * BRICKWIDTH)) / 2;
 const BRICKOFFSETY = 80;
 
-const BOOKXPOS = (CANVASWIDTH - 100) / 2;
-const BOOKYPOS = 20;
-const BOOK_WIDTH = 100;
-const BOOK_HEIGHT = 50;
+const BOOKXPOS = (CANVASWIDTH - 128) / 2;
+const BOOKYPOS = 12;
+const BOOK_WIDTH = 128;
+const BOOK_HEIGHT = 62;
 
 const PROPHECYWIDTH = 15;
 const PROPHECYHEIGHT = 15;
@@ -34,9 +41,7 @@ const PROPHECYHEIGHT = 15;
 const brickWallImage = new Image();
 
 const worlds = ['placeholder.jpg'];
-
-
-brickWallImage.src = 'test.png';
+brickWallImage.src = 'sprites/world.png';
 
 
 const ballImage = new Image();
@@ -45,19 +50,47 @@ ballImage.src = 'sprites/eye.png'
 const paddleImage = new Image();
 paddleImage.src = 'sprites/paddle.png'
 
+const frameImage = new Image();
+frameImage.src = 'sprites/frame.png'
+
+const gateImage = new Image();
+gateImage.src = 'sprites/gate.png'
+
+const bookImage = new Image();
+bookImage.src = 'sprites/book.png'
+
+const prophecyImage = new Image();
+prophecyImage.src = 'sprites/prophecy.png'
+
 let score = 0;
 
 
-
-
-brickWallImage.onload = function() {
+frameImage.onload = function() {
     startGame();
 }
 
 function startGame() {
 
-    //menuGame();
-    playGame();
+    let startBox = document.getElementById('start_game');
+    startBox.style.display = 'block'
+
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    document.addEventListener('keypress', exitMenu);
+
+    function exitMenu(e) {
+        document.removeEventListener('keypress', exitMenu);
+        console.log('uuuh');
+        startBox.style.display = 'none';
+        playGame();
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(50, 50, 45, .9)';
+    ctx.fillRect(20, 20, 818, 618);
+    ctx.drawImage(frameImage, 0, 0, CANVASWIDTH, CANVASHEIGHT, 0, 0, CANVASWIDTH, CANVASHEIGHT);
+
 }
 
 
@@ -66,25 +99,25 @@ function playGame() {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
-    let restart = document.querySelector('#restart_button');
-    restart.style.display = 'none';
+    restartButton = document.getElementById('restart_button');
+    scoreBox = document.getElementById('score_box');
 
     // SCORE
 
-    let scoreBox = document.querySelector('#score_box');
     scoreBox.style.display = 'block';
 
     function updateScore() {
         score += 100;
-        score_box.innerHTML = 'score: ' + score;
+        scoreBox.innerHTML = 'score: ' + score;
     }
 
 
     // BORDERS
     const borders = {
         draw() {
-            ctx.strokeStyle = 'white';
-            ctx.strokeRect(BORDERWIDTH, BORDERWIDTH, canvas.width - BORDERWIDTH * 2, canvas.height - BORDERWIDTH * 2);
+            // ctx.strokeStyle = 'white';
+            // ctx.strokeRect(BORDERWIDTH, BORDERWIDTH, canvas.width - BORDERWIDTH * 2, canvas.height - BORDERWIDTH * 2);
+            ctx.drawImage(frameImage, 0, 0, CANVASWIDTH, CANVASHEIGHT, 0, 0, CANVASWIDTH, CANVASHEIGHT);
         }
     }
 
@@ -103,13 +136,17 @@ function playGame() {
         spitWait: 0,
         ballToSpit: 0,
 
+        i: 0,
+
         update() {
             if (this.status == 'opening') {
                 this.f += 1;
             } else if (this.status == 'closing') {
                 this.f -= 1;
+                this.i += 1;
             } else if (this.status == 'open') {
                 this.spitWait += 1;
+                this.i +=1;
             }
 
             if (this.f == 100) {
@@ -117,7 +154,8 @@ function playGame() {
             }
 
             if (this.f == 0 && this.status == 'closing') {
-                this.status = 'closed'
+                this.status = 'closed';
+                this.i = 0;
             }
 
             if (this.spitWait == 200) {
@@ -142,16 +180,23 @@ function playGame() {
         },
 
         draw() {
-            if (this.status == 'closed') {
-                ctx.fillStyle = '#111111';
-            } else if (this.status == 'opening') {
-                ctx.fillStyle = '#777777';
-            } else if (this.status == 'open') {
-                ctx.fillStyle = '#FFFFFF';
-            } else if (this.status == 'closing') {
-                ctx.fillStyle = '#FF0000';
+            // if (this.status == 'closed') {
+            //     ctx.fillStyle = '#111111';
+            // } else if (this.status == 'opening') {
+            //     ctx.fillStyle = '#777777';
+            // } else if (this.status == 'open') {
+            //     ctx.fillStyle = '#FFFFFF';
+            // } else if (this.status == 'closing') {
+            //     ctx.fillStyle = '#FF0000';
+            // }
+            // ctx.fillRect(this.x, canvas.height - BORDERWIDTH, this.w, BORDERWIDTH);
+            if (this.status == 'open' || this.status == 'closing') {
+                if (this.i % 50 < 25) {
+                    ctx.drawImage(gateImage, 0, 0, 250, 150, this.x -25, CANVASHEIGHT - 150, 250, 150)
+                } else {
+                    ctx.drawImage(gateImage, 250, 0, 250, 150, this.x -25, CANVASHEIGHT - 150, 250, 150)
+                }
             }
-            ctx.fillRect(this.x, canvas.height - BORDERWIDTH, this.w, BORDERWIDTH);
         }
 
     }
@@ -395,11 +440,12 @@ function playGame() {
         },
 
         draw() {
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, this.w, this.h);
-            ctx.fillStyle = "blue";
-            ctx.fill();
-            ctx.closePath();
+            // ctx.beginPath();
+            // ctx.rect(this.x, this.y, this.w, this.h);
+            // ctx.fillStyle = "blue";
+            // ctx.fill();
+            // ctx.closePath();
+            ctx.drawImage(bookImage, 0, 0, 128, 62, this.x, this.y, this.w, this.h)
         }
 
     }
@@ -430,11 +476,16 @@ function playGame() {
         }
 
         draw() {
-            ctx.beginPath();
-            ctx.rect(this.x, this.y, this.w, this.h);
-            ctx.fillStyle = "yellow";
-            ctx.fill();
-            ctx.closePath();
+            // ctx.beginPath();
+            // ctx.rect(this.x, this.y, this.w, this.h);
+            // ctx.fillStyle = "yellow";
+            // ctx.fill();
+            // ctx.closePath();
+            if (this.dx < 0) {
+                ctx.drawImage(prophecyImage, 0, 0, 17, 19, this.x - 1, this.y - 2, 17, 19)
+            } else {
+                ctx.drawImage(prophecyImage, 17, 0, 17, 19, this.x - 1, this.y - 2, 17, 19)
+            }
         }
     }
 
@@ -476,10 +527,10 @@ function playGame() {
 
     // ANNOYING PRINTED PROPHECY IN THE MIDDLE OF THE SCREEN
 
-    let prophecy_box = document.querySelector('#prophecy_box');
-    let when_span = document.querySelector('#when');
-    let who_span = document.querySelector('#who');
-    let what_span = document.querySelector('#what');
+    prophecyBox = document.getElementById('prophecy_box');
+    let when_span = document.getElementById('when');
+    let who_span = document.getElementById('who');
+    let what_span = document.getElementById('what');
 
     let all_the_prophecies = the_ends_of_the_world
 
@@ -494,7 +545,7 @@ function playGame() {
                 if (this.f > 700) {
                     this.f = 0;
                     this.status = false;
-                    prophecy_box.style.display = 'none'
+                    prophecyBox.style.display = 'none'
                 }
             }
         },
@@ -509,7 +560,7 @@ function playGame() {
                 who_span.innerHTML = endOfTheWorld[1];
                 what_span.innerHTML = endOfTheWorld[2];
 
-                prophecy_box.style.display = 'block';
+                prophecyBox.style.display = 'block';
 
                 this.status = true;
                 this.f = 0;
@@ -692,8 +743,10 @@ function playGame() {
         status: false,
 
         endGame() {
-            this.status = true;
-            restart.style.display = 'block';
+            if (this.status == false) {
+                this.status = true;
+                restartButton.style.display = 'block';
+            }
         },
 
         draw() {
@@ -707,8 +760,10 @@ function playGame() {
     // let oldTimeStamps;
     // let fps;
     let frames = 0;
+    let frame = new Image();
+    frame.src = 'frame.png'
 
-    function drawGame(timeStamp) {
+    function drawGame() {
         frames += 1;
 
 
@@ -746,9 +801,11 @@ function playGame() {
 
         // if (frames % 2 == 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(50, 50, 45, .9)';
+        ctx.fillRect(20, 20, 818, 618);
+        borders.draw();
         gameOver.draw();
         gate.draw();
-        borders.draw();
         book.draw();
         drawBricks();
         drawProphecies();
@@ -762,15 +819,22 @@ function playGame() {
 
         //prophecyOnScreen.draw();
         // }
-        window.requestAnimationFrame(drawGame);
+        playGameReq = window.requestAnimationFrame(drawGame);
     }
 
-    window.requestAnimationFrame(drawGame);
+    playGameReq = window.requestAnimationFrame(drawGame);
 }
 
 
+
+
+
 function restart() {
-    score: 0;
+    score = 0;
+    restartButton.style.display = 'none';
+    prophecyBox.style.display = 'none';
+    scoreBox.innerHTML = 'score: ' + score;
+    window.cancelAnimationFrame(playGameReq);
     playGame();
 }
 
@@ -784,60 +848,3 @@ function valBetweenAltMin(val, min, max) {
     return (val > min) ? ((val < max) ? val : max) : min;
 }
 
-
-const fadeIn = (el, smooth = true, displayStyle = 'block') => {
-    let f = 0;
-
-    el.style.opacity = 0;
-    el.style.display = displayStyle;
-    if (smooth) {
-        let opacity = 0;
-        let request;
-
-        const animation = () => {
-            if (f > 20) {
-                el.style.opacity = opacity += 0.15;
-                if (opacity >= 1) {
-                    opacity = 1;
-                    cancelAnimationFrame(request);
-                }
-            }
-            console.log(f)
-            f += 1;
-        };
-
-        const rAf = () => {
-            request = requestAnimationFrame(rAf);
-            animation();
-        };
-        rAf();
-
-    } else {
-        el.style.opacity = 1;
-    }
-};
-
-const fadeOut = (el, smooth = true, displayStyle = 'none') => {
-    if (smooth) {
-        let opacity = el.style.opacity;
-        let request;
-
-        const animation = () => {
-            el.style.opacity = opacity -= 0.15;
-            if (opacity <= 0) {
-                opacity = 0;
-                el.style.display = displayStyle;
-                cancelAnimationFrame(request);
-            }
-        };
-
-        const rAf = () => {
-            request = requestAnimationFrame(rAf);
-            animation();
-        };
-        rAf();
-
-    } else {
-        el.style.opacity = 0;
-    }
-};

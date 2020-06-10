@@ -12,94 +12,139 @@
 }
 
 body {
-    background-color: black;
+    background: url('test_background.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 
 #title {
     position: absolute;
-    width: 800px;
     left: 50%;
     transform: translateX(-50%);
-    top: 5px;
+    top: 1vh;
 
     font-family: 'Brea';
     color: white;
-    font-size: 72px;
+    font-size: 48px;
     text-align: center;
+    padding: 2px 20px 5px 20px;
+
+    background-color: rgba(50, 50, 45, .9);
+    border: 2px solid gray;
 }
 
 #restart_button {
-	position: absolute;
-    width: 800px;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 770px;
+    bottom: 4vh;
 
     font-family: 'Brea';
     color: white;
     font-size: 36px;
     text-align: center;
+    padding: 0px 20px 6px 20px;
+
+    background-color: rgba(50, 50, 45, .9);
+    border: 2px solid gray;
 
     display: none;
 }
 
 #restart_button:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 canvas {
-    background: "#111110";
-    border: solid 3px #222;
-}
+/*    background: rgba(50, 50, 45, .9);
+*//*    border: solid 3px #222;
+*/}
 
 #gameCanvas {
     position: absolute;
-    width: 800px;
-    height: 600px;
+    width: 858px;
+    height: 658px;
 
-    image-rendering: -moz-crisp-edges;
+/*    image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    
-    background-color: "#111110"; 
+*/
+/*    background-color: "#111110";
+*/
 }
 
 #container {
     position: absolute;
-    top: 100px;
-    width: 800px;
-    height: 600px;
+    top: 50%;
+    width: 858px;
+    height: 658px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 }
 
-#score_box {
-	position: absolute;
-	top: 20px;
-	left: 29px;
+/*#frame {
+ 	position: absolute;
+    top: 50%;
+    width: 858px;
+    height: 658px;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-	color: white;
-	font-family: Brea;
-	font-size: 25px;
-	letter-spacing: 3px;
+    background-image: url('sprites/frame.png')
+}
+*/
+
+
+#start_game {
+	position: absolute;
+	left: 18%;
+	width: 64%;
+	top:50%;
+	transform: translateY(-50%);
+	padding: 10px;
 
 	display: none;
+
+	color: white;
+	font-family: 'courier new';
+}
+
+
+
+#score_box {
+    position: absolute;
+    top: 49px;
+    left: 58px;
+
+    color: white;
+    font-family: Brea;
+    font-size: 30px;
+    letter-spacing: 3px;
+
+    display: none;
 }
 
 
 #prophecy_box {
     position: absolute;
-    top: 65%;
-    left: 5%;
+    top: 62%;
+    left: 6%;
     height: 30%;
-    width: 90%;
-    border: 2px solid pink;
+    width: 88%;
+    border: 2px solid grey;
+
+    padding: 10px;
 
     display: none;
 
     color: white;
     font-family: 'courier new';
-    background-color: rgba(0, 0, 0, .7)
-}
+
+    background: rgb(5,5,5);
+	background: linear-gradient(0deg, rgba(5,5,5,.95) 0%, rgba(98,97,93,.85) 100%);
+/*    background-color: rgba(0, 0, 0, .7)
+*/}
